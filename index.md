@@ -3,7 +3,7 @@
 You can use the [editor on GitHub](https://github.com/nicogc/XShadePage/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/watch?v=KoNN6Ii-3r4/0.jpg)](https://www.youtube.com/watch?v=KoNN6Ii-3r4)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/KoNN6Ii-3r4/0.jpg)](https://www.youtube.com/watch?v=KoNN6Ii-3r4)
 
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
