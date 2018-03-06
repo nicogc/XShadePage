@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="The Green Canvas : Art evaluation analytics">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>The Green Canvas</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ahmedhosny/theGreenCanvas">View on GitHub</a>
+
+          <h1 id="project_title">The Green Canvas</h1>
+          <h2 id="project_tagline">Art evaluation analytics</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ahmedhosny/theGreenCanvas/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ahmedhosny/theGreenCanvas/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
+<a id="data-science-cs109-final-project---fall-2014" class="anchor" href="#data-science-cs109-final-project---fall-2014" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Science CS109 Final Project - Fall 2014</h3>
+
+<h4>
+<a id="ahmed-hosny-jili-huang-yingyi-wang" class="anchor" href="#ahmed-hosny-jili-huang-yingyi-wang" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ahmed Hosny, Jili Huang, Yingyi Wang</h4>
+
+<br>
+<iframe src="//player.vimeo.com/video/114379373" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://vimeo.com/114379373">The Green Canvas: Art Valuation Analytics</a> from <a href="http://vimeo.com/user22774474">yingyi</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+<br>
+
+<h3>
+<a id="background-and-motivation" class="anchor" href="#background-and-motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background and Motivation</h3>
+
+<p>The team is interested in quantifying aesthetics as an extremely subjective and quality-based feature. We are all from design background and we always want to explore the middle realm between artistic evaluation and scientific statistics. How to evaluate a painting? Will there be any interesting relationships between its evaluation (in terms of price) and its pixels? Taking into consideration other factors such as artist's prominence, the project will attempt to answer questions such as: Are paintings of specific contrast tend to be evaluated higher than those with high saturation? Are paintings with sharp edges or on bigger canvases tend to sell cheaper? Focus will be on contemporary paintings as a twist on the exaggerated prices some of these pieces have reached - especially when many are comparable to children's artwork.</p>
+
+<h3>
+<a id="project-objectives" class="anchor" href="#project-objectives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Objectives</h3>
+
+<p>This project aims at studying art valuation criterion with a specific focus on paintings. While the art market itself is responsible for fluctuations and trends, aesthetics plays an important role in evaluating art pieces. Image processing will be utilized to extract pixel information and attempt to correlate these with the peices' current market value. Therefore, the plan is to:</p>
+
+<ul>
+<li>Use data to explore trends in painting evaluation. How is information about the painting or even at the pixel level influencing evaluation?</li>
+<li>Develop a machine learning framework that can predict pricing. Can we develop an algorithm that can replace expert art consultants and can be used by, say, auction houses?</li>
+</ul>
+
+<h3>
+<a id="data-acquisition" class="anchor" href="#data-acquisition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Acquisition</h3>
+
+<p>Data will be collected from two sources:</p>
+
+<ul>
+<li>Internet: Scrape information off websites such as <a href="http://artsalesindex.artinfo.com/asi/lots/3426445">http://artsalesindex.artinfo.com/asi/lots/3426445</a> . A Pandas dataframe will be constructed containing the columns: Artist's name, Year, Country, Painting Name, Style, Material, size, Markings and Price with time sold.</li>
+<li>Image of the painting itself: Use openCV and PIL libraries to add features to the dataframe such as: Face detection - tell us whether it is a portrait or not, Top dominant colors, large/small Areas of solid color, Edges, contrast, brightness, hue, saturation…</li>
+</ul>
+
+<h3>
+<a id="design-overview" class="anchor" href="#design-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Design Overview</h3>
+
+<p>This will be explored in three stages:</p>
+
+<ul>
+<li>Explore trends by grouping by artist, location, material and so on. Which material or style cost the most? Or some interesting discovery such as which size of the drawings would be most expensive in terms of unit area. These will be based on pandas dataframe manipulation and grouping. We will also attempt to reduce dimentionality of the data and explore the principal components.</li>
+<li>After pixel information is added to the dataframe, stage one will be repeated to explore additional trends</li>
+<li>Build a ML model that is able to predict value. Explore different ML techniques learned in class and which is more appropriate for our application. Which feature is most influential on the evaluation?</li>
+</ul>
+
+<hr>
+
+<hr>
+
+<h3>
+<a id="data-scraping" class="anchor" href="#data-scraping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Scraping</h3>
+
+<h4>
+<a id="source" class="anchor" href="#source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source</h4>
+
+<p>To construct our database for analysis. We looked into the <a href="http://artsalesindex.artinfo.com/asi/security/landing-page.ai">Blouin art sales index website</a>, which has over 5 million auction records for modern paintings.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/front%20page.jpg" alt=""></p>
+
+<h4>
+<a id="part-1-create-dataframe" class="anchor" href="#part-1-create-dataframe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Part 1 Create Dataframe</h4>
+
+<p>To get access to information about each paintings, we actually make a 3-step subsequent query using beautifulsoup</p>
+
+<h5>
+<a id="step-1" class="anchor" href="#step-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>step 1</h5>
+
+<p>Using artists' name (alphabet order) - Take 'A' as an example, the url '<a href="http://artsalesindex.artinfo.com/asi/search/artistsAtoZ.ai?lastName=A&amp;startRowNum=">http://artsalesindex.artinfo.com/asi/search/artistsAtoZ.ai?lastName=A&amp;startRowNum=</a>' allows access to the artist's paintings. From here we create a list of all url's to their works.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/dataScraping%20Page1.jpg" alt=""></p>
+
+<h5>
+<a id="step-2" class="anchor" href="#step-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>step 2</h5>
+
+<p>From each of the url above we come to the booklet of each artists. Here we collect the url's to each individual paintings.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/dataScraping%20Page2.jpg" alt=""></p>
+
+<h5>
+<a id="step-3" class="anchor" href="#step-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>step 3</h5>
+
+<p>Finally we have arrive to the info page for each of these artworks. We create our dataframe from these pages.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/dataScraping%20Page3.jpg" alt=""></p>
+
+<h4>
+<a id="part-2-data-joining-and-cleaning" class="anchor" href="#part-2-data-joining-and-cleaning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Part 2 Data joining and cleaning</h4>
+
+<p>From the dataframe we notice there is some inconsistency and missing fields. Our next step is to join the data set and filter out missing field data. The dataframe looks something like this.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/0DATAFRAME.png" alt=""></p>
+
+<hr>
+
+<hr>
+
+<h3>
+<a id="image-processing" class="anchor" href="#image-processing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image processing</h3>
+
+<h4>
+<a id="sample-image" class="anchor" href="#sample-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample Image</h4>
+
+<p>A single image will be used to illustrate the different image processing techniques used in the analysis.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/01Sample.png" alt=""></p>
+
+<h4>
+<a id="most-dominant-colors" class="anchor" href="#most-dominant-colors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Most Dominant Colors</h4>
+
+<p>This function returns the hue of the most dominant color in the image. It first creates a predefined number of clusters from the RGB values in the image array. A larger number of clusters produces a more accurate result but is computationally more expensive. It then assigns codes to each item in the newly clustered array. A histogram counts the number of occurrences of each code. The RGB value that has the highest number of occurrences is the most dominant in the image.
+A post-processing step is required here. The RGB value of the most dominant color is converted into HSL (hue,saturation, lightness). Thresholding is then used to assign each color to a bucket from the following: blacks, whites, grays, reds, yellows, greens, cyans, blues, magentas, reds</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/02Major%20Colors.png" alt=""></p>
+
+<h4>
+<a id="unique-color-ratio" class="anchor" href="#unique-color-ratio" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unique Color Ratio</h4>
+
+<p>This function calculates the number of unique colors in an image as a ration of the total number of pixels. A list of color values across the image is generated. Duplicates are removed and the length of the duplicate-free list is calculated and divded by total number of pixels. If the result is close to 0, the image has very few unique colors i.e. large areas of one solid color. If the result is close to 1, the image is very colorful as every pixel has its own unique color. A 0 result indicates a grayscale image.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/03RGB.png" alt=""></p>
+
+<h4>
+<a id="image-thresholding" class="anchor" href="#image-thresholding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image Thresholding</h4>
+
+<p>Here, we apply a thresholding to the image. If pixel value is greater than a threshold value(here we use 127, range from 0-255), it is assigned one value (255,white), else it is assigned another value (0,black). Then we calculate the Percentage of white or black in the image, so we can get the ratio of black pixels in the greyscale of paintings.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/04GrayScale.png" alt=""></p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/05Thresheld.png" alt=""></p>
+
+<h4>
+<a id="relative-high-and-low-brightness-ratio" class="anchor" href="#relative-high-and-low-brightness-ratio" aria-hidden="true"><span class="octicon octicon-link"></span></a>Relative High and low Brightness Ratio</h4>
+
+<p>We calculate the average brightness of each paintings here. Then we counts how many pixels have two times of the average brightness and how many pixels have less than half of the mean brightness of that image. So we can get the ratio of these two relatively values of each image. Because different from the mean brightness of overall image, sometimes we say this image has brightness because it has more higher ratio of bright pixels compare to the low pixels. We may get the feeling by comparison. One image has average of 100 brightness but has very low std does not feel more bright than a painting with 90 brightness but has a higher std.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/06brightness.png" alt=""></p>
+
+<h4>
+<a id="harris-corner-detection" class="anchor" href="#harris-corner-detection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Harris Corner Detection</h4>
+
+<p>We use Harris Corner Detection to detect the corner in the paiting. Corner is the intersection of two edges, it represents a point in which the directions of these two edges change. Hence, the gradient of the image (in both directions) have a high variation, which can be used to detect it. With that, we can calcluate the ration of pixels as corners in the full image.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/07CornerDetection.png" alt=""></p>
+
+<h4>
+<a id="canny-edge-detection" class="anchor" href="#canny-edge-detection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Canny Edge Detection</h4>
+
+<p>This function use Canny Edge Detection algorithm to detect the edges in the image. And then calculate the percentage of pixels recognized as edges in the whole picture.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/08Edge%20Detection.png" alt=""></p>
+
+<h4>
+<a id="haar-cascade-face-detection" class="anchor" href="#haar-cascade-face-detection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Haar-cascade Face Detection</h4>
+
+<p>We use Haar-cascade Detection in OpenCV to detect the face in paintings. With that, we could know whether this looks like a portrait in a way. Because in contemporary paintings, it is hard to understand the image. Portrait does not necessarily means a portrait. We want to test for a paintings which is somewhat readable as human or face will have different influence on the price. We load haarcascade_frontalface_default as XML classifiers. It will show how many faces are detected in the paintings.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/09FaceDetection.png" alt=""></p>
+
+<h4>
+<a id="dataframe-integration" class="anchor" href="#dataframe-integration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataframe integration</h4>
+
+<p>The output from all these routines is then stored into the previously created dataframe.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/10DataWithImageProcessing.png" alt=""></p>
+
+<hr>
+
+<hr>
+
+<h4>
+<a id="we-analyzed-35407-paintings-at-a-total-valuation-of-9366754845-prices-included-a-maximum-of-119922500-an-average-of-264545-and-a-minimum-of-3" class="anchor" href="#we-analyzed-35407-paintings-at-a-total-valuation-of-9366754845-prices-included-a-maximum-of-119922500-an-average-of-264545-and-a-minimum-of-3" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>"We analyzed 35407 paintings at a total valuation of $9,366,754,845. Prices included a maximum of $119,922,500, an average of $264,545 and a minimum of $3"</em>
+</h4>
+
+<hr>
+
+<hr>
+
+<h3>
+<a id="trends" class="anchor" href="#trends" aria-hidden="true"><span class="octicon octicon-link"></span></a>Trends</h3>
+
+<h4>
+<a id="paintings-produced-in-the-1960s-recorded-the-highest-salesthis-coincides-with-the-many-artistic-impulses-that-began-to-gain-momentum-during-that-period-including-the-explosion-of-consumerism-and-popular-culture" class="anchor" href="#paintings-produced-in-the-1960s-recorded-the-highest-salesthis-coincides-with-the-many-artistic-impulses-that-began-to-gain-momentum-during-that-period-including-the-explosion-of-consumerism-and-popular-culture" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>"Paintings produced in the 1960's recorded the highest sales.This coincides with the many artistic impulses that began to gain momentum during that period including the explosion of consumerism and popular culture."</em>
+</h4>
+
+<p>Below is a comparison of prices aggregated per year with and without Andy Warhol.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/12PricePerYearwihAndy.png" alt=""></p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/13PricePerYearwihoutAndyUpdate.png" alt=""></p>
+
+<h4>
+<a id="paintings-with-whites-grays-and-blacks-as-dominant-colors-are-most-likely-to-have-high-sales-values-compared-to-other-more-saturated-colors" class="anchor" href="#paintings-with-whites-grays-and-blacks-as-dominant-colors-are-most-likely-to-have-high-sales-values-compared-to-other-more-saturated-colors" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>"Paintings with whites, grays and blacks as dominant colors are most likely to have high sales values, compared to other more saturated colors"</em>
+</h4>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/14PricePerDominantColorsCombine.png" alt=""></p>
+
+<h4>
+<a id="paintings-where-low-corner-percentages-are-detected-are-also-more-likely-to-have-high-sales-values" class="anchor" href="#paintings-where-low-corner-percentages-are-detected-are-also-more-likely-to-have-high-sales-values" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>"Paintings where low corner percentages are detected are also more likely to have high sales values."</em>
+</h4>
+
+<p>Below are corner percentages grouped by three artist bands: master, famous and non famous. 9 artists that had large deviation are the plotted separately.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/15CornerPercentageGroupby.png" alt="">
+<img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/17CornerPercentageArtist.png" alt=""></p>
+
+<h4>
+<a id="auction-of-very-valuable-pieces-tend-to-coincide-with-successful-exhibitions" class="anchor" href="#auction-of-very-valuable-pieces-tend-to-coincide-with-successful-exhibitions" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>"Auction of very valuable pieces tend to coincide with successful exhibitions."</em>
+</h4>
+
+<p>From these famous artists's principles we've found an interesting feature. They tend to have very high peak at certain time. After research we realize all these moments they have run a very successful exhibition (eg: the Grand Opening of Mark Rothko Art Centre at 2006, Paul Cezanne exhibition 2013 the Museum of Fine Arts in Budapest ...). Then some masterpiece will be on auction. It is very likely that the media advertisement and public exhibition work together to attract attention first, then some really valuable art work will be sold.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/18famousPart%20(1).jpg" alt=""></p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/19famousPart%20(2).jpg" alt=""></p>
+
+<hr>
+
+<hr>
+
+<h3>
+<a id="machine-learning" class="anchor" href="#machine-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Machine Learning</h3>
+
+<p>In an attempt to develop a machine learning platform for pricing artwork, we created a linear regression model specifically fit for paintings by Spanish painter Pablo Picasso. We used a set of 4000 paintings for training and another equal set for testing. Our model reached a  predicted prices/actual prices correlation of 0.58. Using a single log on the price value gave the most optimum results.</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/Pablo%20Picasso.jpg" alt=""></p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/21Correlation.png" alt=""></p>
+
+<p>We also built separate regression models based on single parameters as predictors. We noticed that the ratio of unique colors alone generated a relatively high correlation of 0.46 between predicted prices and actual prices. </p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/22Parameter.png" alt=""></p>
+
+<p>This allowed us to pick the best performing parametrs for our regression model. The final version of the model scored  between 0.32 and 0.34</p>
+
+<p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/23finalmachinelearning.png" alt=""></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">The Green Canvas maintained by <a href="https://github.com/ahmedhosny">ahmedhosny</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
