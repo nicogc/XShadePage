@@ -8,6 +8,24 @@ You can use the [editor on GitHub](https://github.com/nicogc/XShadePage/edit/mas
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
+## Abstract 
+El paper trata de dar un renderizado con
+estilo 3D a sketches usando unas curvas usadas en los
+sketches llamadas curvas de corte de seccion o CrossSec-  ́
+tion Curves, usando estar curvas y algunas restricciones
+se puede determinar las normales en el sketch con las
+cuales se podr dar un shading adecuado para dar el
+efecto de 3D.
+## Introduccion
+El paper se divide en 2 partes principales, la primera
+es encontrar las normales en los puntos de interseccion ́
+de los CrossSections y la segunda es propagar esa
+normal alrededor de la curva y todo el sketch.
+
+##Code
+Code Available on [GitHub](https://github.com/nicogc/crossshade).
+
+
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
