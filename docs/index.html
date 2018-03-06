@@ -16,14 +16,14 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/ahmedhosny/theGreenCanvas">View on GitHub</a>
+          <a id="forkme_banner" href="https://github.com/nicogc/crossshade">View on GitHub</a>
 
-          <h1 id="project_title">The Green Canvas</h1>
-          <h2 id="project_tagline">Art evaluation analytics</h2>
+          <h1 id="project_title">Welcome to XShadePage </h1>
+          <h2 id="project_tagline">CrossShade - Replication</h2>
 
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/ahmedhosny/theGreenCanvas/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/ahmedhosny/theGreenCanvas/tarball/master">Download this project as a tar.gz file</a>
+              <a class="zip_download_link" href="https://github.com/nicogc/crossshade/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/nicogc/crossshade/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
@@ -32,19 +32,21 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a id="data-science-cs109-final-project---fall-2014" class="anchor" href="#data-science-cs109-final-project---fall-2014" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Science CS109 Final Project - Fall 2014</h3>
+<a id="data-science-cs109-final-project---fall-2014" class="anchor" href="#data-science-cs109-final-project---fall-2014" aria-hidden="true"><span class="octicon octicon-link"></span></a>Computer Graphics CS109 Final Project </h3>
 
 <h4>
-<a id="ahmed-hosny-jili-huang-yingyi-wang" class="anchor" href="#ahmed-hosny-jili-huang-yingyi-wang" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ahmed Hosny, Jili Huang, Yingyi Wang</h4>
+<a id="ahmed-hosny-jili-huang-yingyi-wang" class="anchor" href="#ahmed-hosny-jili-huang-yingyi-wang" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nicolás Gutierrez Castilla</h4>
 
 <br>
-<iframe src="//player.vimeo.com/video/114379373" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://vimeo.com/114379373">The Green Canvas: Art Valuation Analytics</a> from <a href="http://vimeo.com/user22774474">yingyi</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KoNN6Ii-3r4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> 
+
+<!--<p><a href="https://www.youtube.com/watch?v=KoNN6Ii-3r4">The Green Canvas: Art Valuation Analytics</a> from <a href="http://vimeo.com/user22774474">yingyi</a> on <a href="https://youtube.com">Youtube</a>.</p>-->
 <br>
 
 <h3>
-<a id="background-and-motivation" class="anchor" href="#background-and-motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background and Motivation</h3>
+<a id="background-and-motivation" class="anchor" href="#background-and-motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resumen</h3>
 
-<p>The team is interested in quantifying aesthetics as an extremely subjective and quality-based feature. We are all from design background and we always want to explore the middle realm between artistic evaluation and scientific statistics. How to evaluate a painting? Will there be any interesting relationships between its evaluation (in terms of price) and its pixels? Taking into consideration other factors such as artist's prominence, the project will attempt to answer questions such as: Are paintings of specific contrast tend to be evaluated higher than those with high saturation? Are paintings with sharp edges or on bigger canvases tend to sell cheaper? Focus will be on contemporary paintings as a twist on the exaggerated prices some of these pieces have reached - especially when many are comparable to children's artwork.</p>
+<p>El paper trata de dar un renderizado con estilo 3D a sketches usando unas curvas usadas en los sketches llamadas curvas de corte de seccion o CrossSec- ́ tion Curves, usando estar curvas y algunas restricciones se puede determinar las normales en el sketch con las cuales se podr dar un shading adecuado para dar el efecto de 3D.</p>
 
 <h3>
 <a id="project-objectives" class="anchor" href="#project-objectives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Objectives</h3>
@@ -57,37 +59,71 @@
 </ul>
 
 <h3>
-<a id="data-acquisition" class="anchor" href="#data-acquisition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Acquisition</h3>
+<a id="data-acquisition" class="anchor" href="#data-acquisition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduccion</h3>
 
-<p>Data will be collected from two sources:</p>
+<p>El paper se divide en 2 partes principales, la primera es encontrar las normales en los puntos de interseccion ́ de los CrossSections y la segunda es propagar esa normal alrededor de la curva y todo el sketch.</p>
 
+
+<!--
 <ul>
 <li>Internet: Scrape information off websites such as <a href="http://artsalesindex.artinfo.com/asi/lots/3426445">http://artsalesindex.artinfo.com/asi/lots/3426445</a> . A Pandas dataframe will be constructed containing the columns: Artist's name, Year, Country, Painting Name, Style, Material, size, Markings and Price with time sold.</li>
 <li>Image of the painting itself: Use openCV and PIL libraries to add features to the dataframe such as: Face detection - tell us whether it is a portrait or not, Top dominant colors, large/small Areas of solid color, Edges, contrast, brightness, hue, saturation…</li>
 </ul>
+-->
+
 
 <h3>
-<a id="design-overview" class="anchor" href="#design-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Design Overview</h3>
+<a id="design-overview" class="anchor" href="#design-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Algoritmo</h3>
 
-<p>This will be explored in three stages:</p>
+<h4>
+<a id="source" class="anchor" href="#source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problema de Minimización</h4>
 
+<p>Para hallar las normales en los puntos de interseccion ́ entre cross sections, se intenta minimizar la función para determinar la tercera componente de la tangente en el punto donde se cruzan las curvas de corte de sección y hallar los valores de las normales correspondientes a los planos 3D que contienen a cada una de las curvas de corte de sección.</p>
+
+<h4>
+<a id="source" class="anchor" href="#source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Propagación de la Normal</h4>
+
+<ul>
+<li>La región esta encerrada por 4 curvas de corte de sección.</li>
+<li>Se estima una grilla en esta región</li>
+<li>Por ultimo se utiliza una interpolacion coons en la grilla estimada.</li>
+</ul>
+
+<!--
 <ul>
 <li>Explore trends by grouping by artist, location, material and so on. Which material or style cost the most? Or some interesting discovery such as which size of the drawings would be most expensive in terms of unit area. These will be based on pandas dataframe manipulation and grouping. We will also attempt to reduce dimentionality of the data and explore the principal components.</li>
 <li>After pixel information is added to the dataframe, stage one will be repeated to explore additional trends</li>
 <li>Build a ML model that is able to predict value. Explore different ML techniques learned in class and which is more appropriate for our application. Which feature is most influential on the evaluation?</li>
 </ul>
-
+-->
 <hr>
 
 <hr>
 
 <h3>
-<a id="data-scraping" class="anchor" href="#data-scraping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Scraping</h3>
+<a id="data-scraping" class="anchor" href="#data-scraping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementación</h3>
+
 
 <h4>
-<a id="source" class="anchor" href="#source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source</h4>
+<a id="source" class="anchor" href="#source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Leer Cross Sections Curves</h4>
 
-<p>To construct our database for analysis. We looked into the <a href="http://artsalesindex.artinfo.com/asi/security/landing-page.ai">Blouin art sales index website</a>, which has over 5 million auction records for modern paintings.</p>
+<p>En el paper utilizan herramientas de dibujo vecto- riales estndar, asi que para las curvas que se dibujan
+
+pixel a pixel trato de aproximar una curva de bezier cubica que minimice la distancia entre esta curva y los pixeles de la curva y remplazo los pixeles pintados con la nueva curva de bezier B(t).</p>
+
+<h4>
+<a id="source" class="anchor" href="#source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resolver el problema de minimización</h4>
+
+<p>Ahora que tenemos las curvas en ya no en pixeles sino en funcin a una curva de bezier podemos saber si dos curvas se cruzan y en que parametro t, también podemos derivar la funcion de la curva para obtener las ́ tangentes en esos puntos, pero solo los componentes (x,y). Para la optimizacion de la función ́ 1 utilice la librería nlopt, y como era una sumatoria al cuadrado, utilice el metodo de optimización LN_COBYLA que no utiliza la gradiente de la funcion para poder optimizarla.</p>
+
+
+<h3>
+<a id="data-scraping" class="anchor" href="#data-scraping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusiones</h3>
+<p>Una de las partes más importantes del paper es encontrar las normales en los puntos de interseccion entre cross sections curves (Cross Hairs), asi que ahora falta propagar las normales por el sketch.</p>
+<a id="data-scraping" class="anchor" href="#data-scraping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Codigo</h3>
+<p>Code Available on <a href="https://github.com/nicogc/crossshade">Github</a></p>
+
+
 
 <p><img src="https://raw.githubusercontent.com/ahmedhosny/theGreenCanvas/gh-pages/images/front%20page.jpg" alt=""></p>
 
